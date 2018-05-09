@@ -1,16 +1,51 @@
-const blankLine = '   |   |   ';
+const generatePlayerBoard = (numberOfRows, numberOfColumns) => {
+    let board = [];
+    
+    for(let i = 0; i < numberOfRows; i++){
+        let row = [];
 
-console.log('This is what an empty board would look like:');
-console.log(blankLine);
-console.log(blankLine);
-console.log(blankLine);
+        for(let j = 0; j < numberOfColumns; j++){
+            row.push('  ');
+        }
+        board.push(row);
+    }
 
-const guessLine = '1  |   |   ';
-const bombLine = '   | B |   ';
+    return board;
+};
 
-console.log('This is what a board with a guess and bomb on it would look like:');
+const generateBombBoard = (numberOfRows, numberOfColumns, numberOfBombs) => {
+    let board = [];
+    
+    for(let i = 0; i < numberOfRows; i++){
+        let row = [];
 
-console.log(guessLine);
-console.log(bombLine);
-console.log(blankLine);
+        for(let j = 0; j < numberOfColumns; j++){
+            row.push(null);
+        }
+        board.push(row);
+    }
 
+    let numberOfBombsPlaced = 0;
+
+    while(numberOfBombsPlaced < numberOfBombs){
+        const randomRowIndex = Math.floor(Math.random() * numberOfRows);
+        const randomColumIndex = Math.floor(Math.random() * numberOfColumns);
+        
+        board[randomRowIndex][randomColumIndex] = 'B';
+
+        numberOfBombsPlaced++;
+        //This will be fixed when you learn about control flow.
+    }
+    return board;
+};
+
+const printBoard = board => console.log(board.map(row => row.join(' | ')).join('\n'));
+
+let playerBoard = generatePlayerBoard(3,4);
+let bombBoard = generateBombBoard(3, 4, 5);
+
+console.log('Player Board: ');
+printBoard(playerBoard);
+
+console.log('Bomb Board: ');
+printBoard(bombBoard);
